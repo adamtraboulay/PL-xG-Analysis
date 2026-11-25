@@ -1,21 +1,21 @@
-team,played,goals_for,goals_against,points,goal_difference
-Arsenal,38,71,27,85,44
-Manchester City,38,77,35,78,42
-Manchester United,38,69,50,71,19
-Aston Villa,38,56,49,65,7
-Liverpool,38,63,53,60,10
-Bournemouth,38,58,54,57,4
-Sunderland,38,42,48,54,-6
-Brighton,38,52,46,53,6
-Brentford,38,55,52,53,3
-Chelsea,38,58,52,52,6
-Fulham,38,47,51,52,-4
-Newcastle United,38,53,55,49,-2
-Everton,38,47,50,49,-3
-Leeds,38,49,56,47,-7
-Crystal Palace,38,41,51,45,-10
-Nottingham Forest,38,48,51,44,-3
-Tottenham,38,48,57,41,-9
-West Ham,38,46,65,39,-19
-Burnley,38,38,75,22,-37
-Wolverhampton Wanderers,38,27,68,20,-41
+Team,Played,Points,Goals_for,xG_for,Finishing,Goals_against,xG_against,Keeping,Goal_difference,xG_diff
+Arsenal,38,85,71,77.49,-6.49,27,33.13,6.13,44,44.35
+Manchester City,38,78,77,79.36,-2.36,35,46.49,11.49,42,32.87
+Manchester United,38,71,69,72.19,-3.19,50,50.28,0.28,19,21.91
+Aston Villa,38,65,56,56.2,-0.2,49,56.68,7.68,7,-0.48
+Liverpool,38,60,63,67.26,-4.26,53,53.87,0.87,10,13.39
+Bournemouth,38,57,58,66.83,-8.83,54,56.77,2.77,4,10.06
+Sunderland,38,54,42,43.14,-1.14,48,60.34,12.34,-6,-17.2
+Brighton,38,53,52,58.42,-6.42,46,53.75,7.75,6,4.67
+Brentford,38,53,55,66.26,-11.26,52,59.11,7.11,3,7.15
+Chelsea,38,52,58,72.21,-14.21,52,58.12,6.12,6,14.09
+Fulham,38,52,47,49.58,-2.58,51,60.84,9.84,-4,-11.26
+Newcastle United,38,49,53,60.61,-7.61,55,57.31,2.31,-2,3.3
+Everton,38,49,47,49.87,-2.87,50,59.99,9.99,-3,-10.12
+Leeds,38,47,49,59.77,-10.77,56,56.33,0.33,-7,3.44
+Crystal Palace,38,45,41,62.46,-21.46,51,60.05,9.05,-10,2.41
+Nottingham Forest,38,44,48,48.94,-0.94,51,64.74,13.74,-3,-15.8
+Tottenham,38,41,48,46.8,1.2,57,55.59,-1.41,-9,-8.79
+West Ham,38,39,46,49.64,-3.64,65,68.12,3.12,-19,-18.48
+Burnley,38,22,38,36.94,1.06,75,82.58,7.58,-37,-45.64
+Wolverhampton Wanderers,38,20,27,38.44,-11.44,68,68.3,0.3,-41,-29.86
