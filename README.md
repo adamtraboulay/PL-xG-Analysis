@@ -27,3 +27,5 @@ python backtest.py   # test the model: rate on the first half of 2025/26, predic
 | Goals ratings | 1.112 | 41.1% | 6.0 |
 | Base rates (no team info) | 1.103 | 39.5% | – |
 | Same points as first half | – | – | 6.9 |
+
+Unfortunately was unable to predict current 26/27 season due to Understat website being down until further notice.
