@@ -1,4 +1,5 @@
 import pandas as pd
+from scipy.stats import poisson
 
 matches = pd.read_csv("data/league-chemp.csv")
 
@@ -6,7 +7,30 @@ matches = pd.read_csv("data/league-chemp.csv")
 matches["home_points"] = (3 * (matches["home_goals"] > matches["away_goals"]).astype(int) + (matches["home_goals"] == matches["away_goals"]).astype(int))
 matches["away_points"] = (3 * (matches["away_goals"] > matches["home_goals"]).astype(int) + (matches["home_goals"] == matches["away_goals"]).astype(int))
 
-print(matches[["home_team", "away_team", "home_goals", "away_goals", "home_points", "away_points"]].head())
+def expected_points(home_xg, away_xg, max_goals=10):
+    home_win_prob = 0
+    draw_prob = 0
+    away_win_prob = 0
+
+    for home_goals in range(max_goals + 1):
+        for away_goals in range(max_goals + 1):
+            scoreline_prob = poisson.pmf(home_goals, home_xg) * poisson.pmf(away_goals, away_xg)
+            if home_goals > away_goals:
+                home_win_prob += scoreline_prob
+            elif home_goals == away_goals:
+                draw_prob += scoreline_prob
+            else:
+                away_win_prob += scoreline_prob
+
+    home_xpts = 3 * home_win_prob + draw_prob
+    away_xpts = 3 * away_win_prob + draw_prob
+    return home_xpts, away_xpts
+
+matches[["home_xpts", "away_xpts"]] = matches.apply(
+    lambda row: expected_points(row["home_xg"], row["away_xg"]),
+    axis=1,
+    result_type="expand",
+)
 
 home = pd.DataFrame({
     "Team": matches["home_team"],
@@ -35,12 +59,27 @@ table["Finishing"] = table["Goals_for"] - table["xG_for"]
 table["Keeping"] = table["xG_against"] - table["Goals_against"]
 
 table = table.sort_values(["Points", "Goal_difference", "Goals_for"], ascending=False)
+table.insert(0, "Pos", range(1, len(table) + 1))
+table = table.reset_index()
 
-table = table[["Played", "Points",
+table = table[["Pos", "Team", "Played", "Points",
                "Goals_for", "xG_for", "Finishing",
                "Goals_against", "xG_against", "Keeping",
                "Goal_difference", "xG_diff"]]
 table = table.round(2)
 
-table.to_csv("data/league_table.csv")
-print(table.to_string())
+# Clear names are used in the code above; short football-style headers are only for display
+display_names = {
+    "Played": "P",
+    "Points": "Pts",
+    "Goals_for": "GF",
+    "xG_for": "xGF",
+    "Goals_against": "GA",
+    "xG_against": "xGA",
+    "Goal_difference": "GD",
+    "xG_diff": "xGD",
+}
+table = table.rename(columns=display_names)
+
+table.to_csv("data/league_table.csv", index=False)
+print(table.to_string(index=False))
