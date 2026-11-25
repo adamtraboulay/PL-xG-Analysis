@@ -62,7 +62,9 @@ def match_probabilities(home_expected_goals, away_expected_goals, max_goals=10):
             else:
                 away_win_prob += scoreline_prob
 
-    return home_win_prob, draw_prob, away_win_prob
+    # Scorelines above max_goals are left out, so rescale the three results to add up to exactly 1
+    total_prob = home_win_prob + draw_prob + away_win_prob
+    return home_win_prob / total_prob, draw_prob / total_prob, away_win_prob / total_prob
 
 
 def predict_match(home_team, away_team, ratings, league):

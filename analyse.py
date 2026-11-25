@@ -1,30 +1,21 @@
 import pandas as pd
-from scipy.stats import poisson
 
-matches = pd.read_csv("data/matches_2025-2026.csv")
+from model import load_played_matches, match_probabilities
+
+# Only played matches: unplayed fixtures have no goals or xG yet
+matches = load_played_matches("data/matches_2025-2026.csv")
 
 # win = 3 points, draw = 1 point, loss = 0 points
 matches["home_points"] = (3 * (matches["home_goals"] > matches["away_goals"]).astype(int) + (matches["home_goals"] == matches["away_goals"]).astype(int))
 matches["away_points"] = (3 * (matches["away_goals"] > matches["home_goals"]).astype(int) + (matches["home_goals"] == matches["away_goals"]).astype(int))
 
-def expected_points(home_xg, away_xg, max_goals=10):
-    home_win_prob = 0
-    draw_prob = 0
-    away_win_prob = 0
 
-    for home_goals in range(max_goals + 1):
-        for away_goals in range(max_goals + 1):
-            scoreline_prob = poisson.pmf(home_goals, home_xg) * poisson.pmf(away_goals, away_xg)
-            if home_goals > away_goals:
-                home_win_prob += scoreline_prob
-            elif home_goals == away_goals:
-                draw_prob += scoreline_prob
-            else:
-                away_win_prob += scoreline_prob
-
+def expected_points(home_xg, away_xg):
+    home_win_prob, draw_prob, away_win_prob = match_probabilities(home_xg, away_xg)
     home_xpts = 3 * home_win_prob + draw_prob
     away_xpts = 3 * away_win_prob + draw_prob
     return home_xpts, away_xpts
+
 
 matches[["home_xpts", "away_xpts"]] = matches.apply(
     lambda row: expected_points(row["home_xg"], row["away_xg"]),
